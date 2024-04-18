@@ -19,7 +19,9 @@ WHERE 1543507833 = S.cedula_cliente;
 
 -- Generar un listado de aquellos vehículos que tienen su SOAT a un mes de vencimiento, junto con los datos del vehículo.
 SELECT V.* FROM vehiculos V JOIN soats S ON V.placa = S.placa_vehiculo
-WHERE EXTRACT(YEAR FROM S.fecha_vencimiento) = 2024 AND (EXTRACT(MONTH FROM S.fecha_vencimiento) - EXTRACT(MONTH FROM NOW())) = 1;
+WHERE EXTRACT(YEAR FROM S.fecha_vencimiento) = EXTRACT(YEAR FROM NOW()) AND IF(EXTRACT(MONTH FROM NOW()) <> 12,
+(EXTRACT(MONTH FROM S.fecha_vencimiento) - EXTRACT(MONTH FROM NOW())) = 1,
+(EXTRACT(MONTH FROM NOW()) - EXTRACT(MONTH FROM S.fecha_vencimiento)) = 11);
 
 
 /*Generar un listado de los vehículos y sus conductores, que han presentado multas en el último año.
